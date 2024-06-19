@@ -16,11 +16,10 @@ export default function LoginStart(){
     const [signinStatus, setSigninStatus] = useState("Please provide your 10 Digit Mobile Number.")
     
     
-    const [phoneNumber, setPhoneNumber] = useState("8527791248")
-    const [otp, setOTP] = useState("123456")
+    const [phoneNumber, setPhoneNumber] = useState("")
+    const [otp, setOTP] = useState("")
     const [userName, setUserName] = useState("")
     const[email, setEmail] = useState("")
-    const[user, setUser] = useState()
 
     
     const handleRequestOTP = ()=>{
@@ -57,10 +56,9 @@ export default function LoginStart(){
             onAuthStateChanged(authentication, (user) => {
                 if (user) {
                     console.log(user)
-                    if (!(user.email) || !(user.displayName)){
+                    if (!(user.displayName)){
                         setIsVerifyOTP(false);
                         setIsUserProgile(true);
-                        setUser(user);
                     }
                     else{
                         navigate('/');
@@ -75,13 +73,17 @@ export default function LoginStart(){
         });
     }
 
-    const handleProfile = ()=>{
-        window.confirmationResult.confirm(otp).then((result) => {
-            updateProfile(user, {displayName: userName, email: email})
+    const handleProfile = async()=>{
+        if (userName.length < 10 && email.length < 10){
+            setSigninStatus("Please Provide Valid Name and Email")
+        }
+        else{
+            let data = {displayName: userName + " ("+email+")"};
+            console.log(data);
+            await updateProfile(authentication.currentUser, data)
             navigate('/');
-        }).catch((error) => {
-            setSigninStatus("There is an error in loggin in. Please Try Again: "+error)
-        });
+        }
+        
     }
 
     const handlePhoneChange = (event) => {
@@ -109,7 +111,7 @@ export default function LoginStart(){
                 <div className="container">
                     <div className="section-title">
                         <h2>Sign in</h2>
-                        <p>Sign In/Up to a free coflyr account with yout registered phone number.</p>
+                        <p>Sign in or sign up for a free Coflyr account with your registered phone number.</p>
                     </div>
 
                     <div className="row">
@@ -136,15 +138,14 @@ export default function LoginStart(){
                         </div>
 
                     </div>
-
                 </div>
             </section>)}
             { isVerifyOTP && (
             <section id="contact" className="contact section-bg">
                 <div className="container">
                     <div className="section-title">
-                        <h2>Sign in</h2>
-                        <p>Sign In/Up to a free coflyr account with yout registered phone number.</p>
+                        <h2>Sign In/Up</h2>
+                        <p>Sign in or sign up for a free Coflyr account with your registered phone number.</p>
                     </div>
 
                     <div className="row">
@@ -180,7 +181,7 @@ export default function LoginStart(){
                 <div className="container">
                     <div className="section-title">
                         <h2>Sign in</h2>
-                        <p>Sign In/Up to a free coflyr account with yout registered phone number.</p>
+                        <p>Please provide your full name and email address.</p>
                     </div>
 
                     <div className="row">

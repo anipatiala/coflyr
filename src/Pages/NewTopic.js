@@ -58,6 +58,7 @@ export default function NewTopic(){
                 topicArray: top.toLocaleLowerCase().split(" "),
                 likes:0,
                 dislikes:0,
+                views: 0,
                 description: description,
                 topicCategory: topicCategory,
                 isCurrent: true,
@@ -91,7 +92,7 @@ export default function NewTopic(){
             <div class="modal-content" style={{background: "#eeeef5", padding: "10px"}}>
                 <div class="modal-header">
                     <div className="footer-newsletter">
-                        <h4>Add New Discussion Topic</h4>
+                        <h4>Start a new discussion.</h4>
                         <p></p>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

@@ -30,6 +30,7 @@ export default function Reply(props){
         await updateDoc(doc(firestore, "Reply", id), {
             likes: likes+1
         });
+        props.topic.status = true;
         loadData(props);
     };
 
@@ -37,6 +38,7 @@ export default function Reply(props){
         await updateDoc(doc(firestore, "Reply", id), {
             dislikes: dislikes+1
         });
+        props.topic.status = true;
         loadData(props);
     };
 
@@ -115,7 +117,7 @@ export default function Reply(props){
                                 ) : (
                                     <div className="col-lg-12 topic-reply">
                                         <div className="box">
-                                        <h4>No Result Found</h4>
+                                        <h4>No Reply Found</h4>
                                         <p></p>
                                         </div>
                                     </div>
